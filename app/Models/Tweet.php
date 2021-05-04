@@ -11,9 +11,4 @@ class Tweet extends Model
 
     public $timestamps = false;
     protected $guarded = [];
-
-    //Add weight, testing git..
-    public function addWeight(){
-        return true;
-    }
 }

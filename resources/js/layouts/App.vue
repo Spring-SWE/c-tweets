@@ -15,16 +15,16 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
                   <li class="nav-item active">
-                      <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
+                      <router-link class="nav-link" :to="{ name: 'home' }">Top</router-link>
                   </li>
                   <li class="nav-item">
-                      <router-link class="nav-link"  :to="{ name: 'hello' }">Hello World</router-link>
+                      <router-link class="nav-link"  :to="{ name: 'hello' }">Lastest</router-link>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Portfolio</a>
+                      <a class="nav-link" href="#"></a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="#">Contact</a>
+                      <a class="nav-link" href="#"></a>
                   </li>
                 </ul>
               </div>
