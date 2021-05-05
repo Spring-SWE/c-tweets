@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Console;
-
+use App\Jobs\ProcessTweets;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Symfony\Component\Process\Process;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        //Fetch Tweets from Twitter API and process.
+        $schedule->job(new ProcessTweets)->everyTenMinutes()->sendOutputTo(storage_path('logs/ProcessTweetsJob.txt'));
     }
 
     /**

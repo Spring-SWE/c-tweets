@@ -11,4 +11,5 @@ class Tweet extends Model
 
     public $timestamps = false;
     protected $guarded = [];
+
 }

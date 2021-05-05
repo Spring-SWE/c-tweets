@@ -30,6 +30,7 @@ class CreateTweetsTable extends Migration
             $table->integer('status_favorite_count');
             $table->string('status_media_url')->nullable();
             $table->string('status_parent')->nullable();
+            $table->timestamps();
         });
     }
 
