@@ -38,7 +38,7 @@ class TwitterController extends Controller
                 try
                 {
                     $selectedTweet = Twitter::getTweet($originalTweet['in_reply_to_status_id_str'], ['tweet_mode' => 'extended', 'response_format' => 'array']);
-
+                    return $selectedTweet;
                     //verify that the tweet is a tweet DIRECTLY replying to PARENT Tweet
                     //no multi-level tweets yet allowed.
                     if($selectedTweet['in_reply_to_status_id_str'])
@@ -87,7 +87,9 @@ class TwitterController extends Controller
                             $tweet = Tweet::create([
                                 'status_created_at' => $selectedTweet['created_at'],
                                 'status_id' => $selectedTweet['id_str'],
+                                'status_display_name' => $selectedTweet['user']['name'],
                                 'status_username' => $selectedTweet['user']['screen_name'],
+                                'status_profile_image' => $selectedTweet['user']['profile_image_url_https'],
                                 'original_submitter' => $originalTweet['user']['screen_name'],
                                 'status_user_id' => $selectedTweet['user']['id'],
                                 'status_user_id_str' => $selectedTweet['user']['id_str'],

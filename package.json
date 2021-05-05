@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "vue": "^2.6.12",
         "vue-router": "^3.5.1",
         "vue-tweet-embed": "^2.4.0"

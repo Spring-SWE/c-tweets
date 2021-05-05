@@ -16,5 +16,5 @@ use App\Http\Controllers\Api;
 */
 
 Route::get('botmentions', 'App\Http\Controllers\Api\TwitterController@index');
-Route::get('tweets', 'App\Http\Controllers\Api\TweetController@index');
+Route::get('tweets/latest', 'App\Http\Controllers\Api\TweetController@latest');
 

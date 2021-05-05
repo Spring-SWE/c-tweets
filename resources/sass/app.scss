@@ -7,6 +7,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Font-Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
 
 $font-primary: 'Poppins',Arial, sans-serif;
 $primary: #f8b739;
@@ -18,6 +24,7 @@ body{
 	font-weight: normal;
 	background: #fafafa;
 	color: lighten($black,50%);
+
 }
 a {
 	transition: .3s all ease;
@@ -99,6 +106,10 @@ h1, h2, h3, h4, h5,
 //SIDEBAR
 .wrapper {
   width: 100%;
+}
+
+#sidebar-container {
+    background: #1d1919;
 }
 
 #sidebar {
@@ -201,6 +212,16 @@ a[data-toggle="collapse"] {
 		color: rgba(255,255,255,.5);
 	}
 }
+
+// .fixed-content {
+//     width: 100%;
+// position: fixed;
+// top: 0px;
+// bottom: 0;
+// z-index: 1000;
+// overflow-x: hidden;
+// overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+// }
 
 //Tweets Component
 #tweet{

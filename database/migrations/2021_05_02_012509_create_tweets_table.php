@@ -17,7 +17,9 @@ class CreateTweetsTable extends Migration
             $table->id();
             $table->string('status_created_at');
             $table->string('status_id');
+            $table->string('status_display_name');
             $table->string('status_username');
+            $table->string('status_profile_image');
             $table->string('original_submitter');
             $table->string('status_user_id');
             $table->string('status_user_id_str');

@@ -10,8 +10,13 @@ use App\Http\Resources\TweetResource;
 
 class TweetController extends Controller
 {
-    public function index()
+    public function latest()
     {
         return TweetResource::collection(Tweet::paginate(10));
+    }
+
+    public function hot()
+    {
+
     }
 }
