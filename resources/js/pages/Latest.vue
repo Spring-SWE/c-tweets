@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      axios.get("/api/tweets/hot", {
+      axios.get("/api/tweets/latest", {
         params: {
           page: this.page,
         },

@@ -18,8 +18,9 @@
                       <router-link class="nav-link" :to="{ name: 'home' }">Top</router-link>
                   </li>
                   <li class="nav-item">
-                      <router-link class="nav-link"  :to="{ name: 'hello' }">Lastest</router-link>
+                      <router-link class="nav-link"  :to="{ name: 'latest' }">Latest</router-link>
                   </li>
+
                   <li class="nav-item">
                       <a class="nav-link" href="#"></a>
                   </li>

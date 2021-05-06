@@ -13,8 +13,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import App from './layouts/App'
-import Hello from './pages/Hello'
 import Home from './pages/Home'
+import Latest from './pages/Latest'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
 
@@ -30,9 +30,9 @@ const router = new VueRouter({
             component: Home
         },
         {
-            path: '/hello',
-            name: 'hello',
-            component: Hello,
+            path: '/latest',
+            name: 'latest',
+            component: Latest,
         },
         {
             path: '/about',

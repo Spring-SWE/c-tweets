@@ -14,7 +14,7 @@
 
                     <div class="row">
                         <div class="col-12 mt-1 text-center">
-                            <p v-bind:id="'test'+tweet.id" style="color:#0f1419; font-size:20px; line-height:1.4;">{{ hashtag(tweet.status_text) }}</p>
+                            <p v-bind:id="'test'+tweet.id" style="color:#0f1419; font-size:20px; line-height:1.4;">{{ removeHashtagAndLinks(tweet.status_text) }}</p>
                         </div>
                     </div>
 
@@ -30,8 +30,8 @@
 
                     <div class="row py-2 my-3 text-center" style="border-top:1px solid rgba(0, 0, 0, 0.125)">
                         <!-- <div class="col-"><i style="font-size: 22.5px;" class="far fa-comment"></i> </div> -->
-                        <div class="col-6"><i style="font-size: 22.5px;" class="fas fa-retweet"></i> <span style="position:relative; bottom:3px;">{{kFormatter(tweet.status_retweet_count)}}</span></div>
-                        <div class="col-6"><i style="font-size: 22.5px;" class="far fa-heart"> </i> <span style="position:relative; bottom:3px;">{{kFormatter(tweet.status_favorite_count)}}</span></div>
+                        <div class="col-6"><i style="font-size: 22.5px;" class="fas fa-retweet"></i> <span style="position:relative; bottom:3px;">{{ kFormatter(tweet.status_retweet_count) }}</span></div>
+                        <div class="col-6"><i style="font-size: 22.5px;" class="far fa-heart"> </i> <span style="position:relative; bottom:3px;">{{ kFormatter(tweet.status_favorite_count) }}</span></div>
                     </div>
 
                     <!-- <div class="row">
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="row">
-                        <span class="font-weight-bold" style="color:black;">{{tweet.weight}}</span>
+                        <span class="font-weight-bold" style="color:black; font-size:15px; padding-left:8px;">{{ kFormatter(tweet.weight) }}</span>
                     </div>
 
                     <div class="row py-1">
@@ -69,7 +69,7 @@ export default {
     },
 
     methods: {
-        hashtag: function(text){
+        removeHashtagAndLinks: function(text){
            var repl = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
            var repl = repl.replace(/(#[^\s]*)/g, '');
            return repl;
