@@ -35,6 +35,9 @@ class ProcessTweets implements ShouldQueue
      */
     public function handle()
     {
+        /**
+         * TODO: Add File logging instead of JSON logging.
+         */
         $returnData = [];
 
         //Collect mentions...from people who @ bot.

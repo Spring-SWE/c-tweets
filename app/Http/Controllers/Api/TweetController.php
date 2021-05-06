@@ -12,7 +12,7 @@ class TweetController extends Controller
 {
     public function latest()
     {
-        return TweetResource::collection(Tweet::paginate(10));
+        return TweetResource::collection(Tweet::paginate(2));
     }
 
     public function hot()

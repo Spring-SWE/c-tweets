@@ -8,34 +8,47 @@
         v-bind:key="tweet.id"
         v-bind:tweet="tweet"
       ></tweets>
+      <infinite-loading @infinite="infiniteHandler">
+            <div slot="no-more"></div>
+            <div slot="no-results">No tweets found, did something go wrong?</div>
+      </infinite-loading>
     </div>
   </div>
 </template>
 
 <script>
 import Tweets from "../components/Tweets.vue";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  components: { Tweets },
+  components: { Tweets, InfiniteLoading },
 
   data() {
     return {
-      tweets: Array,
+      page: 1,
+      tweets: [],
     };
   },
   methods: {
-    fetchHotTweets() {
-      axios
-        .get("/api/tweets/latest")
-        .then((response) => {
-          this.tweets = response.data.data;
-        })
-        .catch((err) => console.error(err));
+    infiniteHandler($state) {
+      axios.get("/api/tweets/latest", {
+        params: {
+          page: this.page,
+        },
+      }).then(({ data }) => {
+          console.log(data);
+          console.log(this.page);
+          console.log(this.tweets);
+        //-1 because array counts from 0 and im too lazy to find a cleaner solution for now.ß
+        if (data.meta.total >= this.tweets.length + 1) {
+          this.page += 1;
+          this.tweets.push(...data.data);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
     },
-  },
-
-  created() {
-    this.fetchHotTweets();
   },
 };
 </script>

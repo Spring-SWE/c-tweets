@@ -3,7 +3,7 @@
     <div class="container my-3">
         <div class="row">
             <div class="col-8 card">
-                    <p>submitted by: <a v-bind:href="'https://twitter.com/'+tweet.original_submitter">{{tweet.original_submitter}}</a></p>
+                    <p>submitted by: <a v-bind:href="'https://twitter.com/'+tweet.original_submitter">@{{tweet.original_submitter}}</a></p>
                    <div class="row mt-3">
                         <div class="col-12">
                             <img v-bind:src="tweet.status_profile_image" class="rounded-circle img-fluid" alt="">
@@ -30,8 +30,8 @@
 
                     <div class="row py-2 my-3 text-center" style="border-top:1px solid rgba(0, 0, 0, 0.125)">
                         <!-- <div class="col-"><i style="font-size: 22.5px;" class="far fa-comment"></i> </div> -->
-                        <div class="col-6"><i style="font-size: 22.5px;" class="fas fa-retweet"></i> <span style="position:relative; bottom:3px;">{{tweet.status_retweet_count}}</span></div>
-                        <div class="col-6"><i style="font-size: 22.5px;" class="far fa-heart"> </i> <span style="position:relative; bottom:3px;">{{tweet.status_favorite_count}}</span></div>
+                        <div class="col-6"><i style="font-size: 22.5px;" class="fas fa-retweet"></i> <span style="position:relative; bottom:3px;">{{kFormatter(tweet.status_retweet_count)}}</span></div>
+                        <div class="col-6"><i style="font-size: 22.5px;" class="far fa-heart"> </i> <span style="position:relative; bottom:3px;">{{kFormatter(tweet.status_favorite_count)}}</span></div>
                     </div>
 
                     <!-- <div class="row">
@@ -73,6 +73,10 @@ export default {
            var repl = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
            var repl = repl.replace(/(#[^\s]*)/g, '');
            return repl;
+        },
+
+        kFormatter: function(num) {
+            return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
         }
     },
 }

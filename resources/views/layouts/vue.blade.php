@@ -7,9 +7,7 @@
     <meta property="og:type" content="website" />
     {{-- <meta property="og:image" content="/static/website-social-card-44070c4a901df708aa1563ac4bbe595a.jpg" /> --}}
     <meta property="og:url" content="https://www.cringetweets.com" />
-
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <title>CringeTweets</title>
