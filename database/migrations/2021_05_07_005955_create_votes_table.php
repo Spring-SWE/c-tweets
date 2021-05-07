@@ -18,6 +18,7 @@ class CreateVotesTable extends Migration
             $table->timestamps();
             $table->integer('tweet_id');
             $table->integer('vote')->nullable();
+            $table->ipAddress('visitor');
         });
     }
 

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h3>Latest Submissions</h3>
+    <h3><i style="color:#f8b739;" class="fas fa-bolt"></i>  <span class="ml-1">Latest Submissions</span>  </h3>
     <hr />
+     <small>*Updated every 10 minutes</small>
     <div class="tweets">
       <tweets
         v-for="tweet in tweets"

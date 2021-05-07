@@ -16,6 +16,7 @@ import App from './layouts/App'
 import Home from './pages/Home'
 import Latest from './pages/Latest'
 import About from './pages/About'
+import Support from './pages/Support'
 import NotFound from './pages/NotFound'
 
 
@@ -38,6 +39,12 @@ const router = new VueRouter({
             path: '/about',
             name: 'about',
             component: About,
+        },
+
+        {
+            path: '/support',
+            name: 'support',
+            component: Support,
         },
 
         {

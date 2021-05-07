@@ -42,6 +42,12 @@
                             <li>
                                 <a href="/about">About</a>
                             </li>
+                            <li>
+                                <a href="/change">Change Log</a>
+                            </li>
+                            <li class="fire">
+                                <a href="/support" class="fire"><i class="fas fa-heart"></i> Support</a>
+                            </li>
                         </ul>
 
                         <div class="footer">

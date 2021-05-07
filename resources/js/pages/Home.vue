@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Hottest cringe</h3>
+    <h3><i class="fas fa-fire fire"></i> <span class="ml-1">Hot Cringe</span></h3>
     <hr />
     <div class="tweets">
       <tweets

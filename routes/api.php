@@ -16,6 +16,8 @@ use App\Http\Controllers\Api;
 */
 
 Route::get('botmentions', 'App\Http\Controllers\Api\TwitterController@index');
+
+//API. Look into throttiling per IP.
 Route::get('tweets/hot', 'App\Http\Controllers\Api\TweetController@hot');
 Route::get('tweets/latest', 'App\Http\Controllers\Api\TweetController@latest');
 
