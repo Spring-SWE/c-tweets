@@ -8,7 +8,7 @@
                         <div class="col-12">
                             <img v-bind:src="tweet.status_profile_image" class="rounded-circle img-fluid" alt="">
                             <span style="color:black; font-weight-bold; font-size:16px; position:relative; bottom:10px; left:7px; white-space: nowrap;">{{ tweet.status_display_name }}</span>
-                            <span style="position:absolute; top:17px; left:73px; color:#778998; font-size:13px;">@{{tweet.status_username}}</span>
+                            <span style="position:absolute; top:17px; left:73px; color:#778998; font-size:13px;"><a v-bind:href="'https://twitter.com/'+tweet.status_username">@{{tweet.status_username}}</a></span>
                         </div>
                     </div>
 

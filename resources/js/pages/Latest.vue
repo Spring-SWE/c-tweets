@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Hottest cringe</h3>
+    <h3>Latest Submissions</h3>
     <hr />
     <div class="tweets">
       <tweets
