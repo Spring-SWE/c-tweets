@@ -1,6 +1,5 @@
-## About Cringe Tweet
-
-More to come soon
-
+## Cringe Tweet
+Code base for cringe tweet
+More info to come soon 
 
 
