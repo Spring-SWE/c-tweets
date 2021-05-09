@@ -36,10 +36,6 @@ export default {
           page: this.page,
         },
       }).then(({ data }) => {
-          console.log(data);
-          console.log(this.page);
-          console.log(this.tweets);
-        //-1 because array counts from 0 and im too lazy to find a cleaner solution for now.ß
         if (data.meta.total >= this.tweets.length + 1) {
           this.page += 1;
           this.tweets.push(...data.data);

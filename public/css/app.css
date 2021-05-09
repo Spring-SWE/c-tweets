@@ -16389,3 +16389,7 @@ a[data-toggle=collapse] {
 #tweet {
   background: white;
 }
+
+.fire {
+  color: #e25822 !important;
+}
