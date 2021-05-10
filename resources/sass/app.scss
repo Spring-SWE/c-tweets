@@ -235,12 +235,16 @@ a[data-toggle="collapse"] {
     color:$fire !important;
 }
 
-.votearea{
+.vote-area{
     .fas{
         cursor: pointer;
     }
 }
 
-.primary{
-  color:#f8b739
+.primary {
+  color:$primary
+}
+
+.primary-darker {
+    color:#f6a709;
 }

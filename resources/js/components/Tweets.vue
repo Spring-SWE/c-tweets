@@ -9,7 +9,7 @@
               >@{{ tweet.original_submitter }}</a
             >
           </p>
-          <div class="row mt-3">
+          <div class="row">
             <div class="col-12">
               <img
                 v-bind:src="tweet.status_profile_image"
@@ -89,21 +89,21 @@
         <div class="vote_area">
 
         </div>
-        <div class="col-2 d-flex votearea" >
+        <div class="col-2 d-flex vote-area" >
           <!-- Voted Up on this Tweet  -->
-          <div v-if="vote === 1" class="align-self-center ml-3">
+          <div v-if="voteDirection === 1" class="align-self-center ml-3">
             <div class="row py-1">
               <i
-                class="fas fa-arrow-up primary"
+                class="fas fa-arrow-up primary-darker"
                 style="font-size: 30px"
-                v-on:click="voteUp"
+                v-on:click="vote('up')"
               ></i>
             </div>
 
             <div class="row">
               <span
                 class="font-weight-boldest"
-                style="font-size: 15px; padding-left: 8px"
+                style="color:black; font-size: 15px; padding-left: 8px"
                 >{{ tweetWeight }}
               </span>
             </div>
@@ -112,21 +112,21 @@
               <i
                 class="fas fa-arrow-down"
                 style="font-size: 30px"
-                v-on:click="voteDown"
+                v-on:click="vote('down')"
               ></i>
             </div>
           </div>
 
           <!-- No vote  -->
           <div
-            v-if="vote == null || vote == undefined"
+            v-if="voteDirection == null || vote == undefined"
             class="align-self-center ml-3"
           >
             <div class="row py-1">
               <i
                 class="fas fa-arrow-up"
                 style="font-size: 30px"
-                v-on:click="voteUp"
+                v-on:click="vote('up')"
               ></i>
             </div>
 
@@ -142,18 +142,18 @@
               <i
                 class="fas fa-arrow-down"
                 style="font-size: 30px"
-                v-on:click="voteDown"
+                v-on:click="vote('down')"
               ></i>
             </div>
           </div>
 
             <!-- Voted down -->
-          <div v-if="vote === 0" class="align-self-center ml-3">
+          <div v-if="voteDirection === 0" class="align-self-center ml-3">
             <div class="row py-1">
               <i
                 class="fas fa-arrow-up"
                 style="font-size: 30px"
-                v-on:click="voteUp"
+                v-on:click="vote('up')"
               ></i>
             </div>
 
@@ -167,9 +167,9 @@
 
             <div class="row py-1">
               <i
-                class="fas fa-arrow-down primary"
+                class="fas fa-arrow-down primary-darker"
                 style="font-size: 30px"
-                v-on:click="voteDown"
+                v-on:click="vote('down')"
               ></i>
             </div>
           </div>
@@ -183,10 +183,11 @@
 
 <script>
 export default {
+
   data: function () {
     return {
       tweetWeight: this.tweet.weight,
-      vote: null,
+      voteDirection: null,
     };
   },
 
@@ -196,7 +197,7 @@ export default {
 
   created() {
     if (this.tweet.votes.length > 0) {
-      this.vote = this.tweet.votes[0].vote;
+      this.voteDirection = this.tweet.votes[0].vote;
     }
   },
 
@@ -212,16 +213,16 @@ export default {
   },
 
   methods: {
-    voteUp: function () {
-      axios
-        .get(`/api/vote/${this.tweet.id}/up`)
+    vote: function(direction) {
+         axios
+        .get(`/api/vote/${this.tweet.id}/${direction}`)
         .then(({ data }) => {
-          //Set tweet weight?
+
           this.tweetWeight = data.weight;
-          this.vote = data.current_vote;
+          this.voteDirection = data.current_vote;
 
           if (localStorage.getItem("voteData") === null) {
-            //User voted UP, but has no previous entries, add one.
+            //User voted, but has no previous entries, add one.
             this.$store.commit("createVoteData", {
               voteData: {
                 tweet_id: this.tweet.id,
@@ -229,41 +230,6 @@ export default {
               },
             });
 
-            console.log("done create");
-          } else {
-            //This is not a first time vote data.
-            this.$store.commit("updateVoteData", {
-              voteData: {
-                tweet_id: this.tweet.id,
-                vote: data.current_vote,
-              },
-            });
-          }
-        })
-        .catch(function (error) {
-          alert("Take a screen shot and send this to me." + error);
-          console.log(error);
-        });
-    },
-
-    voteDown: function () {
-      axios
-        .get(`/api/vote/${this.tweet.id}/down`)
-        .then(({ data }) => {
-          //Set tweet weight?
-          this.tweetWeight = data.weight;
-          this.vote = data.current_vote;
-
-          if (localStorage.getItem("voteData") === null) {
-            //User voted UP, but has no previous entries, add one.
-            this.$store.commit("createVoteData", {
-              voteData: {
-                tweet_id: this.tweet.id,
-                vote: data.current_vote,
-              },
-            });
-
-            console.log("done create");
           } else {
             //This is not a first time vote data.
             this.$store.commit("updateVoteData", {
@@ -286,5 +252,6 @@ export default {
         : Math.sign(num) * Math.abs(num);
     },
   },
+
 };
 </script>

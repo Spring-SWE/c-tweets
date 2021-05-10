@@ -48,6 +48,11 @@
                             <li class="fire">
                                 <a href="/support" class="fire"><i class="fas fa-heart"></i> Support</a>
                             </li>
+                            <li class="mt-1">
+                                <i class="fab fa-2x fa-twitter-square"></i>
+                                <i class="fab fa-2x fa-github-square"></i>
+
+                            </li>
                         </ul>
 
                         <div class="footer">
