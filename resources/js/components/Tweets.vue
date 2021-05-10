@@ -41,7 +41,7 @@
                 v-bind:id="'test' + tweet.id"
                 style="color: #0f1419; font-size: 20px; line-height: 1.4"
               >
-                {{ removeHashtagAndLinks(tweet.status_text) }}
+                {{ removedHashtagAndLinks }}
               </p>
             </div>
           </div>
@@ -86,8 +86,42 @@
                         <div class="col-3">img</div>
                     </div> -->
         </div>
-        <div class="col-2 d-flex">
-          <div class="align-self-center ml-3">
+        <div class="vote_area">
+
+        </div>
+        <div class="col-2 d-flex votearea" >
+          <!-- Voted Up on this Tweet  -->
+          <div v-if="vote === 1" class="align-self-center ml-3">
+            <div class="row py-1">
+              <i
+                class="fas fa-arrow-up primary"
+                style="font-size: 30px"
+                v-on:click="voteUp"
+              ></i>
+            </div>
+
+            <div class="row">
+              <span
+                class="font-weight-boldest"
+                style="font-size: 15px; padding-left: 8px"
+                >{{ tweetWeight }}
+              </span>
+            </div>
+
+            <div class="row py-1">
+              <i
+                class="fas fa-arrow-down"
+                style="font-size: 30px"
+                v-on:click="voteDown"
+              ></i>
+            </div>
+          </div>
+
+          <!-- No vote  -->
+          <div
+            v-if="vote == null || vote == undefined"
+            class="align-self-center ml-3"
+          >
             <div class="row py-1">
               <i
                 class="fas fa-arrow-up"
@@ -98,16 +132,49 @@
 
             <div class="row">
               <span
-                class="font-weight-bold"
+                class="font-weight-boldest"
                 style="color: black; font-size: 15px; padding-left: 8px"
-                >{{ tweetWeight }}</span
-              >
+                >{{ tweetWeight }}
+              </span>
             </div>
 
             <div class="row py-1">
-              <i class="fas fa-arrow-down" style="font-size: 30px"></i>
+              <i
+                class="fas fa-arrow-down"
+                style="font-size: 30px"
+                v-on:click="voteDown"
+              ></i>
             </div>
           </div>
+
+            <!-- Voted down -->
+          <div v-if="vote === 0" class="align-self-center ml-3">
+            <div class="row py-1">
+              <i
+                class="fas fa-arrow-up"
+                style="font-size: 30px"
+                v-on:click="voteUp"
+              ></i>
+            </div>
+
+            <div class="row">
+              <span
+                class="font-weight-boldest"
+                style="color: black; font-size: 15px; padding-left: 8px"
+                >{{ tweetWeight }}
+              </span>
+            </div>
+
+            <div class="row py-1">
+              <i
+                class="fas fa-arrow-down primary"
+                style="font-size: 30px"
+                v-on:click="voteDown"
+              ></i>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -118,9 +185,8 @@
 export default {
   data: function () {
     return {
-      tweetWeight: 0,
-      voted: null,
-      localStorage: [],
+      tweetWeight: this.tweet.weight,
+      vote: null,
     };
   },
 
@@ -128,30 +194,85 @@ export default {
     tweet: Object,
   },
 
-  methods: {
-    removeHashtagAndLinks: function (text) {
-      var repl = text.replace(/(?:https?|ftp):\/\/[\n\S]+/g, "");
-      var repl = repl.replace(/(#[^\s]*)/g, "");
-      return repl;
-    },
+  created() {
+    if (this.tweet.votes.length > 0) {
+      this.vote = this.tweet.votes[0].vote;
+    }
+  },
 
+  computed: {
+    removedHashtagAndLinks: function () {
+      var links = this.tweet.status_text.replace(
+        /(?:https?|ftp):\/\/[\n\S]+/g,
+        ""
+      );
+      var hashtags = links.replace(/(#[^\s]*)/g, "");
+      return hashtags;
+    },
+  },
+
+  methods: {
     voteUp: function () {
       axios
-        .get("/api/vote/2/1")
+        .get(`/api/vote/${this.tweet.id}/up`)
         .then(({ data }) => {
+          //Set tweet weight?
+          this.tweetWeight = data.weight;
+          this.vote = data.current_vote;
 
-            var test = {
-                "tweet_id": 1,
-                "vote_status": 1
-            };
+          if (localStorage.getItem("voteData") === null) {
+            //User voted UP, but has no previous entries, add one.
+            this.$store.commit("createVoteData", {
+              voteData: {
+                tweet_id: this.tweet.id,
+                vote: data.current_vote,
+              },
+            });
 
-            this.localStorage.push(test);
-            console.log(this.localStorage);
-            localStorage.setItem("storageData", JSON.stringify(this.localStorage));
-            console.log("go");
-            //persist?
+            console.log("done create");
+          } else {
+            //This is not a first time vote data.
+            this.$store.commit("updateVoteData", {
+              voteData: {
+                tweet_id: this.tweet.id,
+                vote: data.current_vote,
+              },
+            });
+          }
+        })
+        .catch(function (error) {
+          alert("Take a screen shot and send this to me." + error);
+          console.log(error);
+        });
+    },
 
+    voteDown: function () {
+      axios
+        .get(`/api/vote/${this.tweet.id}/down`)
+        .then(({ data }) => {
+          //Set tweet weight?
+          this.tweetWeight = data.weight;
+          this.vote = data.current_vote;
 
+          if (localStorage.getItem("voteData") === null) {
+            //User voted UP, but has no previous entries, add one.
+            this.$store.commit("createVoteData", {
+              voteData: {
+                tweet_id: this.tweet.id,
+                vote: data.current_vote,
+              },
+            });
+
+            console.log("done create");
+          } else {
+            //This is not a first time vote data.
+            this.$store.commit("updateVoteData", {
+              voteData: {
+                tweet_id: this.tweet.id,
+                vote: data.current_vote,
+              },
+            });
+          }
         })
         .catch(function (error) {
           alert("Take a screen shot and send this to me." + error);

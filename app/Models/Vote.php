@@ -19,4 +19,9 @@ class Vote extends Model
         'vote',
         'visitor',
     ];
+
+    public function tweet()
+    {
+        return $this->belongsTo(Tweet::class);
+    }
 }

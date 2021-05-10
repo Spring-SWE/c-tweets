@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3><i class="fas fa-fire fire"></i> <span class="ml-1">Hot Cringe</span></h3>
+    <h3>
+      <i class="fas fa-fire fire"></i> <span class="ml-1">Hot Cringe</span>
+    </h3>
     <hr />
     <div class="tweets">
       <tweets
@@ -9,8 +11,8 @@
         v-bind:tweet="tweet"
       ></tweets>
       <infinite-loading @infinite="infiniteHandler">
-            <div slot="no-more"></div>
-            <div slot="no-results">No tweets found, did something go wrong?</div>
+        <div slot="no-more"></div>
+        <div slot="no-results">No tweets found, did something go wrong?</div>
       </infinite-loading>
     </div>
   </div>
@@ -31,19 +33,21 @@ export default {
   },
   methods: {
     infiniteHandler($state) {
-      axios.get("/api/tweets/hot", {
-        params: {
-          page: this.page,
-        },
-      }).then(({ data }) => {
-        if (data.meta.total >= this.tweets.length + 1) {
-          this.page += 1;
-          this.tweets.push(...data.data);
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
-      });
+      axios
+        .get("/api/tweets/hot", {
+          params: {
+            page: this.page,
+          },
+        })
+        .then(({ data }) => {
+          if (data.meta.total >= this.tweets.length + 1) {
+            this.page += 1;
+            this.tweets.push(...data.data);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        });
     },
   },
 };

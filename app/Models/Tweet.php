@@ -12,4 +12,9 @@ class Tweet extends Model
     public $timestamps = false;
     protected $guarded = [];
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
 }

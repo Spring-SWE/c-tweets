@@ -15,6 +15,7 @@ class TweetResource extends JsonResource
     public function toArray($request)
     {
         $newTime = Carbon::parse($this->status_created_at)->format('g:i A . F d, Y ');
+
         return [
             'id' => $this->id,
             'status_created_at' => $newTime,
@@ -27,6 +28,7 @@ class TweetResource extends JsonResource
             'status_retweet_count' => $this->status_retweet_count,
             'status_favorite_count' => $this->status_favorite_count,
             'status_media_url' => $this->status_media_url,
+            'votes' => $this->votes->where('visitor', $request->ip()),
         ];
     }
 }

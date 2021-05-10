@@ -20,98 +20,98 @@ class VoteController extends Controller
      */
     public function vote(Request $request, $tweet_id, $direction)
     {
+        if($direction == "up") {
+            $direction = 1;
+        } elseif($direction == "down") {
+            $direction = 0;
+        } else {
+            dd("not allowed");
+        }
 
         $vote = Vote::firstOrCreate(
             ['visitor' => $request->ip(), 'tweet_id' => $tweet_id],
-            ['tweet_id' => $tweet_id, 'vote' => $direction, 'visitor' => $request->ip()]
+            ['tweet_id' => $tweet_id, 'visitor' => $request->ip()]
         );
+
+
+        $tweet = Tweet::find($tweet_id);
 
         /**
          * Sloppy as hell, will refactor this soon lol
          */
         if ($direction == 1) {
-            //var_dump($vote->vote);
+
+            //Vote is 0, you vote up so 1.
             if ($vote->vote === 0) {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight + 1;
-                $tweet->save();
 
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = 1;
-                $vote2->save();
+                $tweetWeight = $tweet->weight + 2;
+                $this->updateVote($tweet, $vote, $tweetWeight, 1);
 
                 return response()->json([
-                    'current_vote' => $vote2->vote,
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
-
+                //Vote is 1, you vote up, so no vote, or NULL.
             } elseif ($vote->vote === 1) {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight - 1;
-                $tweet->save();
-
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = NULL;
-                $vote2->save();
+                $tweetWeight = $tweet->weight - 1;
+                $this->updateVote($tweet, $vote, $tweetWeight, NULL);
 
                 return response()->json([
-                    'current_vote' => $vote2->vote,
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
+                //Vote is NULL (you haven't voted), you vote up, so 1.
+            } elseif($vote->vote === null) {
+                $tweetWeight = $tweet->weight + 1;
+                $this->updateVote($tweet, $vote, $tweetWeight, 1);
 
-
-            } else {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight + 1;
-                $tweet->save();
-
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = 1;
-                $vote2->save();
-
-               return response()->json([
-                    'current_vote' => $vote2->vote,
+                return response()->json([
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
             }
-        } elseif($direction == 0){
+            //Vote is currently -1, you voted down again so null
+        } elseif ($direction == 0) {
+
             if ($vote->vote === 0) {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight + 1;
-                $tweet->save();
 
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = NULL;
-                $vote2->save();
+                $tweetWeight = $tweet->weight + 1;
+                $this->updateVote($tweet, $vote, $tweetWeight, NULL);
 
                 return response()->json([
-                    'current_vote' => $vote2->vote,
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
-
+                //Vote is currently UP but you voted down so 0
             } elseif ($vote->vote === 1) {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight - 1;
-                $tweet->save();
 
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = 0;
-                $vote2->save();
+                $tweetWeight = $tweet->weight - 2;
+                $this->updateVote($tweet, $vote, $tweetWeight, 0);
 
                 return response()->json([
-                    'current_vote' => $vote2->vote,
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
-            } else {
-                $tweet = Tweet::find($tweet_id);
-                $tweet->weight = $tweet->weight + -1;
-                $tweet->save();
+                //You have not voted, and vote is down so 0
+            } elseif($vote->vote === null) {
+                $tweetWeight = $tweet->weight - 1;
 
-                $vote2 = Vote::find($vote->id);
-                $vote2->vote = 0;
-                $vote2->save();
+                $this->updateVote($tweet, $vote, $tweetWeight, 0);
 
                 return response()->json([
-                    'current_vote' => $vote2->vote,
+                    'current_vote' => $vote->vote,
+                    'weight' => $tweetWeight,
                 ]);
             }
-        } else {
-            dd("no");
         }
+    }
+
+    private function updateVote($tweet, $vote, $weight, $voteNumber)
+    {
+        $tweet->weight = $weight;
+        $tweet->save();
+
+        $vote->vote = $voteNumber;
+        $vote->save();
     }
 }
