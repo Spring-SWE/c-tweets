@@ -35,6 +35,7 @@
             </div>
           </div>
 
+          <router-link :to="{ name: 'show', params: { id } }">
           <div class="row">
             <div class="col-12 mt-1 text-center">
               <p
@@ -46,6 +47,7 @@
             </div>
           </div>
 
+
           <div class="row">
             <div class="col-12 text-center">
               <img
@@ -55,6 +57,7 @@
               />
             </div>
           </div>
+          </router-link>
 
           <div class="row">
             <div class="col-12">{{ tweet.status_created_at }}</div>
@@ -85,11 +88,10 @@
                         <div class="col-3">img</div>
                         <div class="col-3">img</div>
                     </div> -->
-        </div>
-        <div class="vote_area">
 
         </div>
-        <div class="col-2 d-flex vote-area" >
+        <div class="vote_area"></div>
+        <div class="col-2 d-flex vote-area">
           <!-- Voted Up on this Tweet  -->
           <div v-if="voteDirection === 1" class="align-self-center ml-3">
             <div class="row py-1">
@@ -103,7 +105,7 @@
             <div class="row">
               <span
                 class="font-weight-boldest"
-                style="color:black; font-size: 15px; padding-left: 8px"
+                style="color: black; font-size: 15px; padding-left: 8px"
                 >{{ tweetWeight }}
               </span>
             </div>
@@ -147,7 +149,7 @@
             </div>
           </div>
 
-            <!-- Voted down -->
+          <!-- Voted down -->
           <div v-if="voteDirection === 0" class="align-self-center ml-3">
             <div class="row py-1">
               <i
@@ -173,8 +175,6 @@
               ></i>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -183,9 +183,9 @@
 
 <script>
 export default {
-
   data: function () {
     return {
+      id: this.tweet.id,
       tweetWeight: this.tweet.weight,
       voteDirection: null,
     };
@@ -196,8 +196,14 @@ export default {
   },
 
   created() {
-    if (this.tweet.votes.length > 0) {
-      this.voteDirection = this.tweet.votes[0].vote;
+    //Vote should be an Object when viewing multiple votes
+    if (typeof this.tweet.vote == "object") {
+      if (this.tweet.vote.length > 0) {
+        this.voteDirection = this.tweet.vote[0].vote;
+      }
+      //Vote will be a integer when viewing a single vote
+    } else {
+        this.voteDirection = this.tweet.vote;
     }
   },
 
@@ -213,13 +219,14 @@ export default {
   },
 
   methods: {
-    vote: function(direction) {
-         axios
+    vote: function (direction) {
+      axios
         .get(`/api/vote/${this.tweet.id}/${direction}`)
         .then(({ data }) => {
-
+          //Get the updated weight and direction
           this.tweetWeight = data.weight;
           this.voteDirection = data.current_vote;
+
 
           if (localStorage.getItem("voteData") === null) {
             //User voted, but has no previous entries, add one.
@@ -229,7 +236,6 @@ export default {
                 vote: data.current_vote,
               },
             });
-
           } else {
             //This is not a first time vote data.
             this.$store.commit("updateVoteData", {
@@ -242,7 +248,6 @@ export default {
         })
         .catch(function (error) {
           alert("Take a screen shot and send this to me." + error);
-          console.log(error);
         });
     },
 
@@ -252,6 +257,5 @@ export default {
         : Math.sign(num) * Math.abs(num);
     },
   },
-
 };
 </script>

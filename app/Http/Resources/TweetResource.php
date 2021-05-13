@@ -28,7 +28,7 @@ class TweetResource extends JsonResource
             'status_retweet_count' => $this->status_retweet_count,
             'status_favorite_count' => $this->status_favorite_count,
             'status_media_url' => $this->status_media_url,
-            'votes' => $this->votes->where('visitor', $request->ip()),
+            'vote' => $this->votes->where('visitor', $request->ip()),
         ];
     }
 }

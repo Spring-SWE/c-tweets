@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\Vote;
 use App\Models\Tweet;
 use App\Http\Controllers\Controller;
-use Error;
 use Illuminate\Http\Request;
 
 class VoteController extends Controller
@@ -13,20 +12,14 @@ class VoteController extends Controller
     /**
      * Handle voting logic.
      *
-     * @param $id - ID of the Tweet
+     * @param $tweet_id - ID of the Tweet
      * @param $direction - Direction the user is voting, up or down
      *
-     * @return not Resource
+     * @return JSON response
      */
     public function vote(Request $request, $tweet_id, $direction)
     {
-        if ($direction == "up") {
-            $direction = 1;
-        } elseif ($direction == "down") {
-            $direction = 0;
-        } else {
-            dd("not allowed");
-        }
+        $direction = ($direction == 'down') ? 0 : (($direction == 'up') ? 1 : dd("can't do that."));
 
         $vote = Vote::firstOrCreate(
             ['visitor' => $request->ip(), 'tweet_id' => $tweet_id],
@@ -34,9 +27,7 @@ class VoteController extends Controller
         );
         $tweet = Tweet::find($tweet_id);
 
-        /**
-         * Sloppy as hell, will refactor this soon lol
-         */
+
         if ($direction == 1) {
 
             //Vote is 0, you vote up so 1. Vote vaule goes to 1 or 'voted up'

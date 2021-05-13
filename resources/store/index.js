@@ -29,6 +29,8 @@ export default new Vuex.Store({
         updateVoteData(state, payload) {
             let needsNewObject = true;
             let matchedIndex = null;
+            //What if the user left the site? The state would not remain, but the localStorage would..
+            state.storage.voteData = JSON.parse(localStorage.getItem('voteData'));
             let voteData = state.storage.voteData;
 
             //Check if they've voted on this tweet

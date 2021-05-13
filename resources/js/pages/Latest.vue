@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3><i style="color:#f8b739;" class="fas fa-bolt"></i>  <span class="ml-1">Latest Submissions</span>  </h3>
-    <hr />
+    <h3><i style="color:#f8b739;" class="fas fa-bolt"></i>  <span class="ml-1">Latest Submissions</span> </h3>
      <small>*Updated every 10 minutes</small>
+    <hr />
     <div class="tweets">
       <tweets
         v-for="tweet in tweets"
@@ -37,9 +37,6 @@ export default {
           page: this.page,
         },
       }).then(({ data }) => {
-          console.log(data);
-          console.log(this.page);
-          console.log(this.tweets);
         //-1 because array counts from 0 and im too lazy to find a cleaner solution for now.ß
         if (data.meta.total >= this.tweets.length + 1) {
           this.page += 1;
