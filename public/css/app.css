@@ -16405,3 +16405,16 @@ a[data-toggle=collapse] {
 .primary-darker {
   color: #f6a709;
 }
+
+.share-network-twitter {
+  background-color: #1da1f2;
+  padding: 5px;
+  color: white;
+}
+
+.share-network-facebook {
+  background-color: #4867aa;
+  padding: 5px;
+  color: white;
+  margin-left: 3px;
+}

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Vote;
 use App\Models\Tweet;
 use App\Http\Resources\TweetResource;
+use App\Models\TweetUser;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
@@ -36,8 +37,7 @@ class TweetController extends Controller
         })->first();
     }
 
-    public function search(Request $request) {
-
-        $search = $request->input('search');
+    public function search(Request $request, $query) {
+        return TweetResource::collection(Tweet::where('status_username', 'LIKE', '%'.$query.'%')->orderBy('weight', 'desc')->paginate(10));
     }
 }

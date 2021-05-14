@@ -20,27 +20,35 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div
-            class="nav navbar-nav ml-auto w-100"
-            style=""
-          >
-            <form class="form-inline w-100 text-center p-3" role="form">
+          <div class="nav navbar-nav ml-auto w-100" style="">
+            <form
+              class="form-inline w-100 text-center p-3"
+              @submit.prevent
+              role="form"
+            >
               <input
+                v-on:keyup.enter="submit"
                 type="text"
                 class="form-control input-lg w-100 mt-3"
-                placeholder="Search Twitter Handle"
-                disabled
+                placeholder="Search twitter handle"
+                v-model="query"
               />
             </form>
           </div>
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-              <router-link class="nav-link" exact-active-class="active" :to="{ name: 'home' }"
+              <router-link
+                class="nav-link"
+                exact-active-class="active"
+                :to="{ name: 'home' }"
                 >Top</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active" :to="{ name: 'latest' }"
+              <router-link
+                class="nav-link"
+                active-class="active"
+                :to="{ name: 'latest' }"
                 >Latest</router-link
               >
             </li>
@@ -64,5 +72,25 @@
 
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      query: "",
+    };
+  },
+  created() {
+    //console.log(this.$router);
+    //console.log("hello?");
+  },
+
+  methods: {
+    submit(event) {
+      //This is a terrible workaround but I CBA to fix this right now.
+      document.location.href = `/search?query=${this.query.replace('@', '')}`;
+    },
+    userHandle(){
+
+    }
+  },
+};
 </script>

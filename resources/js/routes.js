@@ -5,6 +5,7 @@ import Change from './pages/Change'
 import About from './pages/About'
 import Support from './pages/Support'
 import NotFound from './pages/NotFound'
+import Search from './pages/Search'
 
 export const routes = [
     {
@@ -39,6 +40,12 @@ export const routes = [
         path: '/support',
         name: 'support',
         component: Support,
+    },
+    {
+        path: '/search',
+        query: "query",
+        name: 'search',
+        component: Search,
     },
     {
         path: '*',

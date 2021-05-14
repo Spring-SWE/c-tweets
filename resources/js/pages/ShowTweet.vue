@@ -8,7 +8,7 @@
     <hr />
     <div class="container">
 
-      <test></test>
+      <social></social>
     </div>
 
     <div class="tweets">
@@ -23,10 +23,10 @@
 
 <script>
 import Tweets from "../components/Tweets.vue";
-import Test from '../components/Social.vue';
+import Social from '../components/Social.vue';
 
 export default {
-  components: { Tweets, Test },
+  components: { Tweets, Social },
 
   data() {
     return {
@@ -34,11 +34,9 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params);
     axios
       .get(`/api/tweets/show/${this.$route.params.id}`)
       .then(({ data }) => {
-        console.log(data);
         this.tweets.push(data);
       })
       .catch(function (error) {

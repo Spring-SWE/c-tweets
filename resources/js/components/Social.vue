@@ -25,7 +25,7 @@
         <i class="fab fah fa-lg fa-facebook"></i>
         <span>Share</span>
       </ShareNetwork>
-     <div style="border:1px solid red; margin-left:3px;"></div>
+     <div ></div>
      <input type="text" style="padding-left:10px;" v-model="url">
     </div>
   </div>

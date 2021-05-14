@@ -40,7 +40,6 @@ export default {
           },
         })
         .then(({ data }) => {
-            console.log(data);
           if (data.meta.total >= this.tweets.length + 1) {
             this.page += 1;
             this.tweets.push(...data.data);
