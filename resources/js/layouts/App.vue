@@ -29,6 +29,7 @@
                 type="text"
                 class="form-control input-lg w-100 mt-3"
                 placeholder="Search Twitter Handle"
+                disabled
               />
             </form>
           </div>

@@ -1,6 +1,7 @@
 import Home from './pages/Home'
 import Latest from './pages/Latest'
 import ShowTweet from './pages/ShowTweet'
+import Change from './pages/Change'
 import About from './pages/About'
 import Support from './pages/Support'
 import NotFound from './pages/NotFound'
@@ -21,6 +22,12 @@ export const routes = [
         path: '/show/:id',
         name: 'show',
         component: ShowTweet
+    },
+
+    {
+        path: '/change',
+        name: 'change',
+        component: Change
     },
 
     {

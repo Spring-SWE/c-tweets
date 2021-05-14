@@ -35,4 +35,9 @@ class TweetController extends Controller
             $join->where('votes.visitor', $request->ip());
         })->first();
     }
+
+    public function search(Request $request) {
+
+        $search = $request->input('search');
+    }
 }

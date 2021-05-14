@@ -12,8 +12,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes';
 import store from '../store/index'
+import VueSocialSharing from 'vue-social-sharing'
 
-
+Vue.use(VueSocialSharing);
 Vue.use(VueRouter)
 
 const router = new VueRouter({
