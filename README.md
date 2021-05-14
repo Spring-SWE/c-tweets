@@ -1,5 +1,4 @@
 ## Cringe Tweet
-Code base for cringe tweet
-More info to come soon 
+source code for cringetweets.com
 
 
