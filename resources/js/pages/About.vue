@@ -9,7 +9,7 @@
           <div class="card-body">
             <h5 class="card-title"><i class="fab fa-twitter"></i> Tag the bot</h5>
             <p class="card-text">
-             Tag my bot <a href="https://twitter.com/cringetweetbot">(@cringetweetbot)</a> under the post you find to be cringy, it's that simple!
+             Tag the bot <a href="https://twitter.com/cringetweetbot">(@cringetweetbot)</a> under the post you find to be cringy, it's that simple!
             </p>
           </div>
         </div>
