@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //Fetch Tweets from Twitter API and process.
-        $schedule->job(new ProcessTweets)->everyTenMinutes();
+        $schedule->job(new ProcessTweets)->everyMinute();
 
     }
 
