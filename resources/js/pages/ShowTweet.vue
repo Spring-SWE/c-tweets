@@ -8,7 +8,8 @@
     <hr />
     <div class="container">
 
-      <social></social>
+      <social
+      v-bind:tweet_id="tweets[0].id"></social>
     </div>
 
     <div class="tweets">
