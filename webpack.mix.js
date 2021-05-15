@@ -17,6 +17,10 @@ mix.js('resources/js/app.js', 'public/js')
     .vue();
 
 
+    if (mix.inProduction()) {
+        mix.version();
+    }
+
 mix.webpackConfig({
     devServer: {
         host: '0.0.0.0',
