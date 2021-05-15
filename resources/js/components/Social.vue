@@ -24,7 +24,7 @@
         <span>Share</span>
       </ShareNetwork>
      <div ></div>
-     <input type="text" style="padding-left:10px;" v-model="url">
+     <input type="text" class="ml-2" style="padding-left:10px;" v-model="url">
     </div>
   </div>
 </template>

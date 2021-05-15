@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:title" content="CringeTweets - A place where users can share and vote on the cringiest tweets they find." />
     <meta property="og:type" content="website" />
-    {{-- <meta property="og:image" content="/static/website-social-card-44070c4a901df708aa1563ac4bbe595a.jpg" /> --}}
+    <meta property="og:image" content="{{asset('images/logo2.jpg')}}" />
     <meta property="og:url" content="https://www.cringetweets.com" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D315VWP84N"></script>
         <script>
