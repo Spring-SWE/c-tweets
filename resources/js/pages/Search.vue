@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>
-      <i class="fas fa-fire fire"></i> <span class="ml-1">Search results for user @{{ query }}</span>
+      <i class="fas fa-search"></i> <span class="ml-1">Search results for user @{{ query }}</span>
     </h3>
     <hr />
     <div class="tweets">

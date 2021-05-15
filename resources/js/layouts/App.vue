@@ -78,11 +78,6 @@ export default {
       query: "",
     };
   },
-  created() {
-    //console.log(this.$router);
-    //console.log("hello?");
-  },
-
   methods: {
     submit(event) {
       //This is a terrible workaround but I CBA to fix this right now.

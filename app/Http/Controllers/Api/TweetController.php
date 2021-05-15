@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Vote;
 use App\Models\Tweet;
 use App\Http\Resources\TweetResource;
-use App\Models\TweetUser;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
