@@ -33,7 +33,7 @@
 export default {
   data () {
     return {
-      url: `cringetweets.com/show/${this.tweet_id}`,
+      url: `https://cringetweets.com/show/${this.tweet_id}`,
     }
   },
 

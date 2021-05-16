@@ -21,7 +21,7 @@
         gtag('config', 'G-D315VWP84N');
         </script>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <title>CringeTweets</title>
+    <title>CringeTweets - Cringe together</title>
 </head>
 <body>
 
