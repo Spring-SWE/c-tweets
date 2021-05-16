@@ -40,7 +40,7 @@ class ProcessTweets implements ShouldQueue
         $returnData = [];
 
         //Collect mentions...from people who @ bot.
-        $tweets = Twitter::getMentionsTimeline(['screen_name' => 'ezbakespring', 'count' => 10, 'response_format' => 'array']);
+        $tweets = Twitter::getMentionsTimeline(['screen_name' => 'cringetweetbot', 'count' => 50, 'response_format' => 'array']);
 
         //Loop through the tweets that were grabbed from the TimeLine.
         foreach ($tweets as $originalTweet) {
