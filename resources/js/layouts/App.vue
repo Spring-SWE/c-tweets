@@ -64,6 +64,10 @@
       </div>
     </nav>
 
+     <div class="alert alert-primary" role="alert">
+      Cringetweets is currently in beta, things may not be working perfectly yet.
+    </div>
+
     <div class="container">
       <router-view></router-view>
     </div>
@@ -81,11 +85,9 @@ export default {
   methods: {
     submit(event) {
       //This is a terrible workaround but I CBA to fix this right now.
-      document.location.href = `/search?query=${this.query.replace('@', '')}`;
+      document.location.href = `/search?query=${this.query.replace("@", "")}`;
     },
-    userHandle(){
-
-    }
+    userHandle() {},
   },
 };
 </script>
