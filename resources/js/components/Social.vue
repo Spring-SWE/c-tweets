@@ -7,7 +7,6 @@
         title="Check out this cringy tweet"
         description="Cringetweet - A website to share and vote on the cringest tweets found on the web."
         hashtags="cringetweets"
-        twitterUser="cringetweetbot"
       >
         <i class="fab fah fa-lg fa-twitter"></i>
         <span>Share</span>
