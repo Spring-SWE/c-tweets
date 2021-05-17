@@ -5,6 +5,10 @@
           <li>
               Version 1.0.0 (Beta) Launches
           </li>
+          <li>
+              Pushed some updates to mobile layout. It's a work in progress, but mobile should
+              be looking good by the end of the week.
+          </li>
       </ul>
   </div>
 </template>
