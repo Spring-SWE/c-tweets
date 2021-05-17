@@ -95,9 +95,11 @@ class ProcessTweets implements ShouldQueue
                              */
 
                               //lets remove the link-back in status_text for image-only tweets.
-                              if($selectedTweet['entities']['media'][0]['url'] == $selectedTweet['full_text']) {
-                                $selectedTweet['full_text'] = "";
-                            };
+                            if(array_key_exists('media', $selectedTweet['entities'])){
+                                if($selectedTweet['entities']['media'][0]['url'] == $selectedTweet['full_text']) {
+                                    $selectedTweet['full_text'] = "";
+                                };
+                            }
 
                             $tweet = Tweet::create([
                                 'status_created_at' => $selectedTweet['created_at'],
