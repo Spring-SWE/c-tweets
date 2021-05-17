@@ -11,15 +11,17 @@
           </p>
           <div class="row">
             <div class="col-12">
-              <img
-                v-bind:src="tweet.status_profile_image"
-                class="rounded-circle img-fluid"
-                alt=""
-              />
-              <span
-                style="color:black; font-weight-bold; font-size:16px; position:relative; bottom:10px; left:7px; white-space: nowrap;"
-                >{{ tweet.status_display_name }}</span
-              >
+              <router-link :to="{ name: 'show', params: { id } }">
+                <img
+                  v-bind:src="tweet.status_profile_image"
+                  class="rounded-circle img-fluid"
+                  alt=""
+                />
+                <span
+                  style="color:black; font-weight-bold; font-size:16px; position:relative; bottom:10px; left:7px; white-space: nowrap;"
+                  >{{ tweet.status_display_name }}</span
+                >
+              </router-link>
               <span
                 style="
                   position: absolute;
@@ -35,18 +37,15 @@
             </div>
           </div>
 
-          <router-link :to="{ name: 'show', params: { id } }">
           <div class="row">
             <div class="col-12 mt-1 text-center">
-              <p
-                v-bind:id="'test' + tweet.id"
+              <span
                 style="color: #0f1419; font-size: 20px; line-height: 1.4"
+                v-html="removeHashtagAndCreateLinks"
               >
-                {{ removedHashtagAndLinks }}
-              </p>
+              </span>
             </div>
           </div>
-
 
           <div class="row">
             <div class="col-12 text-center">
@@ -57,30 +56,53 @@
               />
             </div>
           </div>
-          </router-link>
 
           <div class="row">
             <div class="col-12">{{ tweet.status_created_at }}</div>
           </div>
 
-          <div
-            class="row py-2 my-3 text-center"
-            style="border-top: 1px solid rgba(0, 0, 0, 0.125)"
-          >
-            <!-- <div class="col-"><i style="font-size: 22.5px;" class="far fa-comment"></i> </div> -->
-            <div class="col-6">
-              <i style="font-size: 22.5px" class="fas fa-retweet"></i>
-              <span style="position: relative; bottom: 3px">{{
-                kFormatter(tweet.status_retweet_count)
-              }}</span>
+          <router-link :to="{ name: 'show', params: { id } }">
+            <div
+              class="row py-2 my-3 text-center"
+              style="border-top: 1px solid rgba(0, 0, 0, 0.125); color: #808080"
+            >
+              <!-- <div class="col-"><i style="font-size: 22.5px;" class="far fa-comment"></i> </div> -->
+              <div class="col-3">
+                <i style="font-size: 22.5px" class="fas fa-retweet"></i>
+                <span style="position: relative; bottom: 3px">{{
+                  kFormatter(tweet.status_retweet_count)
+                }}</span>
+              </div>
+              <div class="col-3">
+                <i style="font-size: 22.5px" class="far fa-heart"> </i>
+                <span style="position: relative; bottom: 3px">{{
+                  kFormatter(tweet.status_favorite_count)
+                }}</span>
+              </div>
+
+              <div class="col-3">
+                <i
+                  style="font-size: 22.5px;"
+                  class="far fa-comment"
+                >
+                </i>
+                <span style="position: relative; bottom: 3px;"
+                  >0
+                </span>
+              </div>
+
+              <div class="col-3">
+                <i
+                  style="font-size: 22.5px;"
+                  class="fas fa-share"
+                >
+                </i>
+                <span style="position: relative; bottom: 3px;"
+                  >0</span
+                >
+              </div>
             </div>
-            <div class="col-6">
-              <i style="font-size: 22.5px" class="far fa-heart"> </i>
-              <span style="position: relative; bottom: 3px">{{
-                kFormatter(tweet.status_favorite_count)
-              }}</span>
-            </div>
-          </div>
+          </router-link>
 
           <!-- <div class="row">
                         <div class="col-3">img</div>
@@ -88,10 +110,9 @@
                         <div class="col-3">img</div>
                         <div class="col-3">img</div>
                     </div> -->
-
         </div>
         <div class="vote_area"></div>
-        <div class="col-2 d-flex vote-area" >
+        <div class="col-2 d-flex vote-area">
           <!-- Voted Up on this Tweet  -->
           <div v-if="voteDirection === 1" class="align-self-center ml-3">
             <div class="row py-1">
@@ -196,6 +217,7 @@ export default {
   },
 
   created() {
+    console.log(this.tweet);
     //Vote should be an Object when viewing multiple votes
     if (typeof this.tweet.vote == "object") {
       if (this.tweet.vote.length > 0) {
@@ -203,18 +225,14 @@ export default {
       }
       //Vote will be a integer when viewing a single vote
     } else {
-        this.voteDirection = this.tweet.vote;
+      this.voteDirection = this.tweet.vote;
     }
   },
 
   computed: {
-    removedHashtagAndLinks: function () {
-      var links = this.tweet.status_text.replace(
-        /(?:https?|ftp):\/\/[\n\S]+/g,
-        ""
-      );
-      var hashtags = links.replace(/(#[^\s]*)/g, "");
-      return hashtags;
+    removeHashtagAndCreateLinks: function () {
+      let hashtags = this.tweet.status_text;
+      return this.linkify(hashtags);
     },
   },
 
@@ -226,7 +244,6 @@ export default {
           //Get the updated weight and direction
           this.tweetWeight = data.weight;
           this.voteDirection = data.current_vote;
-
 
           if (localStorage.getItem("voteData") === null) {
             //User voted, but has no previous entries, add one.
@@ -255,6 +272,33 @@ export default {
       return Math.abs(num) > 999
         ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
         : Math.sign(num) * Math.abs(num);
+    },
+
+    linkify: function (inputText) {
+      var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+      //URLs starting with http://, https://, or ftp://
+      replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+      replacedText = inputText.replace(
+        replacePattern1,
+        '<a href="$1" target="_blank">$1</a>'
+      );
+
+      //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+      replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+      replacedText = replacedText.replace(
+        replacePattern2,
+        '$1<a href="http://$2" target="_blank">$2</a>'
+      );
+
+      //Change email addresses to mailto:: links.
+      replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+      replacedText = replacedText.replace(
+        replacePattern3,
+        '<a href="mailto:$1">$1</a>'
+      );
+
+      return replacedText;
     },
   },
 };

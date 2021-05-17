@@ -29,6 +29,7 @@ class CreateTweetsTable extends Migration
             $table->integer('status_retweet_count');
             $table->integer('status_favorite_count');
             $table->string('status_media_url')->nullable();
+            $table->string('status_urls')->nullable();
             $table->string('status_parent')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

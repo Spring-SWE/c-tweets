@@ -40,9 +40,5 @@ export default {
   props: {
     tweet_id: Number,
   },
-
-  created() {
-      console.log(this.tweet_id)
-  }
 };
 </script>

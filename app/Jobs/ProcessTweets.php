@@ -2,11 +2,11 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
 use App\Models\Tweet;
 use App\Models\TweetUser;
 use Atymic\Twitter\Facade\Twitter;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -93,6 +93,12 @@ class ProcessTweets implements ShouldQueue
                              * We will also need to add the original user so we can properly
                              * calculate weight.
                              */
+
+                              //lets remove the link-back in status_text for image-only tweets.
+                              if($selectedTweet['entities']['media'][0]['url'] == $selectedTweet['full_text']) {
+                                $selectedTweet['full_text'] = "";
+                            };
+
                             $tweet = Tweet::create([
                                 'status_created_at' => $selectedTweet['created_at'],
                                 'status_id' => $selectedTweet['id_str'],
@@ -109,6 +115,7 @@ class ProcessTweets implements ShouldQueue
                                 'status_favorite_count' => $selectedTweet['favorite_count'],
                                 'status_media_url' => $selectedTweet['entities']['media']['0']['media_url_https'] ?? NULL,
                                 'status_parent' => null,
+                                'status_urls' => $selectedTweet['entities']['urls']
                             ]);
 
                             //Also create the user so we don't get duplicate votes.
