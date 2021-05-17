@@ -217,7 +217,6 @@ export default {
   },
 
   created() {
-    console.log(this.tweet);
     //Vote should be an Object when viewing multiple votes
     if (typeof this.tweet.vote == "object") {
       if (this.tweet.vote.length > 0) {
