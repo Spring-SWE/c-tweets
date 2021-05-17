@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3><i style="color:#f8b739;" class="fas fa-bolt"></i>  <span class="ml-1">Latest Submissions</span> </h3>
-     <small>*Updated every minute</small>
+     <small>*Updated every 10 minutes</small>
     <hr />
     <div class="tweets">
       <tweets
