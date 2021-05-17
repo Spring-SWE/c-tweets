@@ -2,7 +2,7 @@
   <div>
     <div class="container my-3">
       <div class="row">
-        <div class="col-8 col-sm-8 col-xs-10 col-lg-8 col-xl-8 card">
+        <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8 col-xl-8 card">
           <p>
             submitted by:
             <a v-bind:href="'https://twitter.com/' + tweet.original_submitter"
@@ -111,8 +111,7 @@
                         <div class="col-3">img</div>
                     </div> -->
         </div>
-        <div class="vote_area"></div>
-        <div class="col-2 d-flex vote-area">
+        <div class="col-2 d-flex vote-area justify-content-center text-center mx-auto" style="">
           <!-- Voted Up on this Tweet  -->
           <div v-if="voteDirection === 1" class="align-self-center ml-3">
             <div class="row py-1">

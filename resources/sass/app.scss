@@ -263,4 +263,11 @@ a[data-toggle="collapse"] {
     margin-left: 3px;
 }
 
+//mobile
+@media only screen and (max-width: 768) {
+    .vote-area{
+        margin-left:100px !important;
+        border:1px solid green !important;
+    }
+  }
 

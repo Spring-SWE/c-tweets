@@ -7,19 +7,8 @@
           <i class="fa fa-bars"></i>
           <span class="sr-only">Toggle Menu</span>
         </button>
-        <button
-          class="btn btn-dark d-inline-block d-lg-none ml-auto"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fa fa-bars"></i>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class=" navbar-collapse" >
           <div class="nav navbar-nav ml-auto w-100" style="">
             <form
               class="form-inline w-100 text-center p-3"
