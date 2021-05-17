@@ -34,7 +34,7 @@ class ProcessTweets implements ShouldQueue
      */
     public function handle()
     {
-        /**
+         /**
          * TODO: Add File logging instead of JSON logging.
          */
         $returnData = [];
@@ -94,7 +94,7 @@ class ProcessTweets implements ShouldQueue
                              * calculate weight.
                              */
 
-                              //lets remove the link-back in status_text for image-only tweets.
+                            //lets remove the link-back in status_text for image-only tweets.
                             if(array_key_exists('media', $selectedTweet['entities'])){
                                 if($selectedTweet['entities']['media'][0]['url'] == $selectedTweet['full_text']) {
                                     $selectedTweet['full_text'] = "";
@@ -117,7 +117,7 @@ class ProcessTweets implements ShouldQueue
                                 'status_favorite_count' => $selectedTweet['favorite_count'],
                                 'status_media_url' => $selectedTweet['entities']['media']['0']['media_url_https'] ?? NULL,
                                 'status_parent' => null,
-                                'status_urls' => $selectedTweet['entities']['urls']
+                                'status_urls' => serialize($selectedTweet['entities']['urls'])
                             ]);
 
                             //Also create the user so we don't get duplicate votes.
