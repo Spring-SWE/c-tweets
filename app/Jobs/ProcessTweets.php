@@ -35,6 +35,7 @@ class ProcessTweets implements ShouldQueue
     {
         /**
          * TODO: Add File logging instead of JSON logging.
+         * What's going on?
          */
         $returnData = [];
 
