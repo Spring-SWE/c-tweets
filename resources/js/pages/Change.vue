@@ -3,6 +3,9 @@
     <ul style="color: black; font-weight: bolder">
       <u>May, 18, 2021</u>
       <li>
+        An absolute CHAD used 300+ ips to spam votes on the site, reCAPTCHA has been implemented :^)
+      </li>
+      <li>
         implemented notification when a tweet is quoting another and showing
         context
       </li>
