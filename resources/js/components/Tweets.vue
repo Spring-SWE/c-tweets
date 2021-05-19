@@ -213,6 +213,10 @@ export default {
   },
 
   created() {
+    const recaptcha = this.$recaptchaInstance;
+    // Hide reCAPTCHA badge:
+    recaptcha.hideBadge();
+
     //Vote should be an Object when viewing multiple votes
     if (typeof this.tweet.vote == "object") {
       if (this.tweet.vote.length > 0) {
@@ -233,7 +237,7 @@ export default {
 
   methods: {
     vote: function (direction) {
-        this.recaptcha();
+      this.recaptcha();
       axios
         .get(`/api/vote/${this.tweet.id}/${direction}`)
         .then(({ data }) => {
