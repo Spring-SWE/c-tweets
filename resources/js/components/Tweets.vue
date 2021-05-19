@@ -123,7 +123,7 @@
               <span
                 class="font-weight-boldest"
                 style="color: black; font-size: 15px; padding-left: 8px"
-                >{{ tweetWeight }}
+                >{{ kFormatter(tweetWeight) }}
               </span>
             </div>
 
