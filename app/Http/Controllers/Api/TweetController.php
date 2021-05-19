@@ -40,11 +40,13 @@ class TweetController extends Controller
             $join->where('votes.visitor', $request->ip());
         })->first();
 
-        //Parse date and unserailze urls
-        $singleTweet->status_created_at = Carbon::parse($singleTweet->status_created_at)->format('g:i A . F d, Y ');
-        $singleTweet->status_urls = unserialize($singleTweet->status_urls);
+        if ($singleTweet) {
+            //Parse date and unserailze urls
+            $singleTweet->status_created_at = Carbon::parse($singleTweet->status_created_at)->format('g:i A . F d, Y ');
+            $singleTweet->status_urls = unserialize($singleTweet->status_urls);
 
-        return $singleTweet;
+            return $singleTweet;
+        }
     }
 
     public function search(Request $request, $query)
@@ -54,7 +56,7 @@ class TweetController extends Controller
 
     public function test()
     {
-          /**
+        /**
          * TODO: Add File logging instead of JSON logging.
          */
         $returnData = [];
@@ -120,12 +122,12 @@ class TweetController extends Controller
 
                             //lets remove the link-back in status_text for image media.
                             //We may have to loop this for multi-pics though.
-                            if(array_key_exists('media', $selectedTweet['entities'])) {
-                                    $selectedTweet['full_text'] = str_replace($selectedTweet['entities']['media'][0]['url'], '', $selectedTweet['full_text']);
+                            if (array_key_exists('media', $selectedTweet['entities'])) {
+                                $selectedTweet['full_text'] = str_replace($selectedTweet['entities']['media'][0]['url'], '', $selectedTweet['full_text']);
                             }
 
                             //Lets remove link-back for retweets.
-                            if(array_key_exists('quoted_status_permalink', $selectedTweet)) {
+                            if (array_key_exists('quoted_status_permalink', $selectedTweet)) {
                                 $selectedTweet['full_text'] = str_replace($selectedTweet['quoted_status_permalink']['url'], '', $selectedTweet['full_text']);
                             }
 
@@ -184,7 +186,7 @@ class TweetController extends Controller
             }
         }
 
-       return $returnData;
+        return $returnData;
     }
 
 
