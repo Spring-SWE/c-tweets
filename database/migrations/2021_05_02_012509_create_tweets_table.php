@@ -31,6 +31,7 @@ class CreateTweetsTable extends Migration
             $table->string('status_media_url')->nullable();
             $table->string('status_urls')->nullable();
             $table->string('status_parent')->nullable();
+            $table->string('quoted_url')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

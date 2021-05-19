@@ -29,6 +29,7 @@ class TweetResource extends JsonResource
             'status_favorite_count' => $this->status_favorite_count,
             'status_media_url' => $this->status_media_url,
             'status_urls' => unserialize($this->status_urls),
+            'quoted_url' => $this->quoted_url,
             'vote' => $this->votes->where('visitor', $request->ip()),
         ];
     }

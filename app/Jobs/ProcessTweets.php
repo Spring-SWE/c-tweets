@@ -24,7 +24,6 @@ class ProcessTweets implements ShouldQueue
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -34,7 +33,7 @@ class ProcessTweets implements ShouldQueue
      */
     public function handle()
     {
-         /**
+        /**
          * TODO: Add File logging instead of JSON logging.
          */
         $returnData = [];
@@ -52,6 +51,10 @@ class ProcessTweets implements ShouldQueue
                 //Try to run! IF any errors are found, they should be dealt with by the catch.
                 try {
                     $selectedTweet = Twitter::getTweet($originalTweet['in_reply_to_status_id_str'], ['tweet_mode' => 'extended', 'response_format' => 'array']);
+                    // echo"<pre>";
+                    // var_dump($selectedTweet);
+                    // echo"</pre>";
+
                     //verify that the tweet is a tweet DIRECTLY replying to PARENT Tweet
                     //no multi-level tweets yet allowed.
                     if ($selectedTweet['in_reply_to_status_id_str']) {
@@ -94,12 +97,33 @@ class ProcessTweets implements ShouldQueue
                              * calculate weight.
                              */
 
-                            //lets remove the link-back in status_text for image-only tweets.
-                            if(array_key_exists('media', $selectedTweet['entities'])){
-                                if($selectedTweet['entities']['media'][0]['url'] == $selectedTweet['full_text']) {
-                                    $selectedTweet['full_text'] = "";
-                                };
+                            //lets remove the link-back in status_text for image media.
+                            //We may have to loop this for multi-pics though.
+                            if (array_key_exists('media', $selectedTweet['entities'])) {
+                                $selectedTweet['full_text'] = str_replace($selectedTweet['entities']['media'][0]['url'], '', $selectedTweet['full_text']);
                             }
+
+                            //Lets remove link-back for retweets.
+                            if (array_key_exists('quoted_status_permalink', $selectedTweet)) {
+                                $selectedTweet['full_text'] = str_replace($selectedTweet['quoted_status_permalink']['url'], '', $selectedTweet['full_text']);
+                            }
+
+                            //Now lets see if we can also remove the link-back url to the post.
+                            //Im assuming the first index will also be the link back to twitter?
+                            // if(array_key_exists('0', $selectedTweet['entities']['urls'])) {
+                            //     echo "Matched URL " . $selectedTweet['entities']['urls']['0']['url'] . "<br>" ;
+                            //     $selectedTweet['full_text'] = str_replace($selectedTweet['entities']['urls']['0']['url'], '', $selectedTweet['full_text']);
+                            //     echo "being removed from: <br>";
+                            // }
+
+                            // echo $selectedTweet['full_text'];
+                            // echo "<br><br>";
+
+                            // echo "<pre>";
+                            // print_r($selectedTweet);
+                            // echo "</pre>";
+
+
 
                             $tweet = Tweet::create([
                                 'status_created_at' => $selectedTweet['created_at'],
@@ -116,6 +140,7 @@ class ProcessTweets implements ShouldQueue
                                 'status_retweet_count' => $selectedTweet['retweet_count'],
                                 'status_favorite_count' => $selectedTweet['favorite_count'],
                                 'status_media_url' => $selectedTweet['entities']['media']['0']['media_url_https'] ?? NULL,
+                                'quoted_url' => $selectedTweet['quoted_status_permalink']['expanded'] ?? NULL,
                                 'status_parent' => null,
                                 'status_urls' => serialize($selectedTweet['entities']['urls'])
                             ]);

@@ -54,7 +54,8 @@
     </nav>
 
      <div class="alert alert-primary" role="alert">
-      Cringetweets is currently in beta, things may not be working perfectly yet.
+      Cringetweets is currently in beta, things may not be working perfectly yet. Over
+      the course of Beta, votes and tweets may be reset as things are updated.
     </div>
 
     <div class="container">

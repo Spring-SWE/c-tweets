@@ -3,6 +3,9 @@
     <div class="container my-3">
       <div class="row">
         <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8 col-xl-8 card">
+            <div v-if="tweet.quoted_url != null">
+                <small><i class="fas fa-retweet"></i> This tweet is quoting this <a :href="tweet.quoted_url" target="_blank">tweet</a></small>
+            </div>
           <p>
             submitted by:
             <a v-bind:href="'https://twitter.com/' + tweet.original_submitter"
