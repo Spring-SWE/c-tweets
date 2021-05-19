@@ -17,12 +17,12 @@ class TweetController extends Controller
 {
     public function hot()
     {
-        return TweetResource::collection(Tweet::orderBy('weight', 'desc')->orderBy('created_at', 'desc')->paginate(5));
+        return TweetResource::collection(Tweet::orderBy('weight', 'desc')->orderBy('created_at', 'desc')->paginate(10));
     }
 
     public function latest()
     {
-        return TweetResource::collection(Tweet::orderBy('created_at', 'desc')->paginate(5));
+        return TweetResource::collection(Tweet::orderBy('created_at', 'desc')->paginate(10));
     }
 
     public function show(Request $request, $tweet_id)
