@@ -275,8 +275,17 @@ export default {
       // Execute reCAPTCHA with action "login".
       const token = await this.$recaptcha("login");
 
-      // Do stuff with the received token.
-      //console.log(token);
+      axios
+        .post("https://www.google.com/recaptcha/api/siteverify", {
+          secret: "6LcGZdsaAAAAALiRjMBeo7CCUmMtbpiW6VuqV1Rf",
+          response: token,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     kFormatter: function (num) {
