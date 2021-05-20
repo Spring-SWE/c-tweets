@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class VoteController extends Controller
 {
     /**
-     * Handle voting logic.
+     * Handle voting logic. (NEED TO REFACTOR SOON)
      *
      * @param $tweet_id - ID of the Tweet
      * @param $direction - Direction the user is voting, up or down
