@@ -235,7 +235,7 @@ export default {
     vote: function (direction) {
       grecaptcha.ready(()=> {
         grecaptcha
-          .execute("6LcGZdsaAAAAAGEKcSBAViwf9A2JUYvcMiAgJwJy", { action: "submit" })
+          .execute("6LdZNN0aAAAAAMTumwVFuySzWAXonfvs8kFTmwyH", { action: "submit" })
           .then((token) => {
             axios
               .get(`/api/vote/${this.tweet.id}/${direction}/${token}`)
