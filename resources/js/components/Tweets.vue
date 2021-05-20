@@ -282,9 +282,11 @@ export default {
         })
         .then(function (response) {
           console.log(response);
+          console.log("test");
         })
         .catch(function (error) {
           console.log(error);
+          console.log("test2");
         });
     },
 
