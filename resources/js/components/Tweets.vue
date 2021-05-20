@@ -240,7 +240,6 @@ export default {
             axios
               .get(`/api/vote/${this.tweet.id}/${direction}/${token}`)
               .then(({ data }) => {
-                  console.log(data);
                 if (data !== "errors with captcha") {
                   //Get the updated weight and direction
                   this.tweetWeight = data.weight;
@@ -264,7 +263,7 @@ export default {
                     });
                   }
                 } else {
-                  console.log(data);
+                  alert("spamming an API doesn't make you a hacker lol")
                 }
               })
               .catch((error) => {
