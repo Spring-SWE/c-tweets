@@ -82,14 +82,15 @@ class VoteController extends Controller
                 ]);
             }
         } else {
-            return $result;
+           // return $result;
+           return json_encode("errors with captcha");
         }
     }
 
     private function verifyCaptcha($gRecaptchaResponse)
     {
         $recaptcha = new \ReCaptcha\ReCaptcha("6LcGZdsaAAAAALiRjMBeo7CCUmMtbpiW6VuqV1Rf");
-        $resp = $recaptcha->setExpectedHostname('localhost')
+        $resp = $recaptcha->setExpectedHostname('cringetweets.com')
             ->setScoreThreshold(0.5)
             ->verify($gRecaptchaResponse,);
 
