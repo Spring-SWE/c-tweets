@@ -89,7 +89,7 @@ class VoteController extends Controller
 
     private function verifyCaptcha($gRecaptchaResponse)
     {
-        $recaptcha = new \ReCaptcha\ReCaptcha("6LcGZdsaAAAAALiRjMBeo7CCUmMtbpiW6VuqV1Rf");
+        $recaptcha = new \ReCaptcha\ReCaptcha(env('GOOGLE_SECRET'));
         $resp = $recaptcha->setExpectedHostname('cringetweets.com')
             ->setScoreThreshold(0.5)
             ->verify($gRecaptchaResponse,);
