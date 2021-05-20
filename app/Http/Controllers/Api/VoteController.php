@@ -19,9 +19,7 @@ class VoteController extends Controller
      */
     public function vote(Request $request, $tweet_id, $direction, $token)
     {
-        $result = $this->verifyCaptcha($token);
-
-        if ($result === true) {
+        if ($this->verifyCaptcha($token) === true) {
             $direction = ($direction == 'down') ? 0 : (($direction == 'up') ? 1 : dd("can't do that."));
 
             $vote = Vote::firstOrCreate(
@@ -83,7 +81,7 @@ class VoteController extends Controller
                 ]);
             }
         } else {
-            return $result;
+            return json_encode("errors with captcha");
         }
     }
 

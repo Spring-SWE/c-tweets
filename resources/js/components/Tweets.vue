@@ -241,31 +241,31 @@ export default {
               .get(`/api/vote/${this.tweet.id}/${direction}/${token}`)
               .then(({ data }) => {
                   console.log(data);
-                // if (data !== "errors with captcha") {
-                //   //Get the updated weight and direction
-                //   this.tweetWeight = data.weight;
-                //   this.voteDirection = data.current_vote;
+                if (data !== "errors with captcha") {
+                  //Get the updated weight and direction
+                  this.tweetWeight = data.weight;
+                  this.voteDirection = data.current_vote;
 
-                //   if (localStorage.getItem("voteData") === null) {
-                //     //User voted, but has no previous entries, add one.
-                //     this.$store.commit("createVoteData", {
-                //       voteData: {
-                //         tweet_id: this.tweet.id,
-                //         vote: data.current_vote,
-                //       },
-                //     });
-                //   } else {
-                //     //This is not a first time vote data.
-                //     this.$store.commit("updateVoteData", {
-                //       voteData: {
-                //         tweet_id: this.tweet.id,
-                //         vote: data.current_vote,
-                //       },
-                //     });
-                //   }
-                // } else {
-                //   console.log(data);
-                // }
+                  if (localStorage.getItem("voteData") === null) {
+                    //User voted, but has no previous entries, add one.
+                    this.$store.commit("createVoteData", {
+                      voteData: {
+                        tweet_id: this.tweet.id,
+                        vote: data.current_vote,
+                      },
+                    });
+                  } else {
+                    //This is not a first time vote data.
+                    this.$store.commit("updateVoteData", {
+                      voteData: {
+                        tweet_id: this.tweet.id,
+                        vote: data.current_vote,
+                      },
+                    });
+                  }
+                } else {
+                  console.log(data);
+                }
               })
               .catch((error) => {
                 alert("Take a screen shot and send this to me." + error);
