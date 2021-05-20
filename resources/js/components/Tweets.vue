@@ -213,10 +213,6 @@ export default {
   },
 
   created() {
-    const recaptcha = this.$recaptchaInstance;
-    // Hide reCAPTCHA badge:
-    recaptcha.hideBadge();
-
     //Vote should be an Object when viewing multiple votes
     if (typeof this.tweet.vote == "object") {
       if (this.tweet.vote.length > 0) {
@@ -237,57 +233,44 @@ export default {
 
   methods: {
     vote: function (direction) {
-      this.recaptcha();
-      axios
-        .get(`/api/vote/${this.tweet.id}/${direction}`)
-        .then(({ data }) => {
-          //Get the updated weight and direction
-          this.tweetWeight = data.weight;
-          this.voteDirection = data.current_vote;
+      grecaptcha.ready(()=> {
+        grecaptcha
+          .execute("6LcGZdsaAAAAAGEKcSBAViwf9A2JUYvcMiAgJwJy", { action: "submit" })
+          .then((token) => {
+            axios
+              .get(`/api/vote/${this.tweet.id}/${direction}/${token}`)
+              .then(({ data }) => {
+                if (data !== "errors with captcha") {
+                  //Get the updated weight and direction
+                  this.tweetWeight = data.weight;
+                  this.voteDirection = data.current_vote;
 
-          if (localStorage.getItem("voteData") === null) {
-            //User voted, but has no previous entries, add one.
-            this.$store.commit("createVoteData", {
-              voteData: {
-                tweet_id: this.tweet.id,
-                vote: data.current_vote,
-              },
-            });
-          } else {
-            //This is not a first time vote data.
-            this.$store.commit("updateVoteData", {
-              voteData: {
-                tweet_id: this.tweet.id,
-                vote: data.current_vote,
-              },
-            });
-          }
-        })
-        .catch(function (error) {
-          alert("Take a screen shot and send this to me." + error);
-        });
-    },
-
-    async recaptcha() {
-      // (optional) Wait until recaptcha has been loaded.
-      await this.$recaptchaLoaded();
-
-      // Execute reCAPTCHA with action "login".
-      const token = await this.$recaptcha("login");
-
-      axios
-        .post("https://www.google.com/recaptcha/api/siteverify", {
-          secret: "6LcGZdsaAAAAALiRjMBeo7CCUmMtbpiW6VuqV1Rf",
-          response: token,
-        })
-        .then(function (response) {
-          console.log(response);
-          console.log("test");
-        })
-        .catch(function (error) {
-          console.log(error);
-          console.log("test2");
-        });
+                  if (localStorage.getItem("voteData") === null) {
+                    //User voted, but has no previous entries, add one.
+                    this.$store.commit("createVoteData", {
+                      voteData: {
+                        tweet_id: this.tweet.id,
+                        vote: data.current_vote,
+                      },
+                    });
+                  } else {
+                    //This is not a first time vote data.
+                    this.$store.commit("updateVoteData", {
+                      voteData: {
+                        tweet_id: this.tweet.id,
+                        vote: data.current_vote,
+                      },
+                    });
+                  }
+                } else {
+                  alert("spamming an API doesn't make you a hacker lol");
+                }
+              })
+              .catch((error) => {
+                alert("Take a screen shot and send this to me." + error);
+              });
+          });
+      });
     },
 
     kFormatter: function (num) {

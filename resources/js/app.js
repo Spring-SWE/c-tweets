@@ -13,10 +13,8 @@ import VueRouter from 'vue-router'
 import { routes } from './routes';
 import store from '../store/index'
 import VueSocialSharing from 'vue-social-sharing'
-import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 
-Vue.use(VueReCaptcha, { siteKey: '6LcGZdsaAAAAAGEKcSBAViwf9A2JUYvcMiAgJwJy' })
 Vue.use(VueSocialSharing);
 Vue.use(VueRouter)
 
