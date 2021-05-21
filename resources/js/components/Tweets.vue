@@ -43,12 +43,37 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row justify-content-center">
             <div class="col-12 mt-1 text-center">
               <span
                 style="color: #0f1419; font-size: 20px; line-height: 1.4"
                 v-html="removeHashtagAndCreateLinks"
               >
+              </span>
+            </div>
+          </div>
+
+        <!-- Link preview  -->
+          <div v-if="statusURL && !statusURL.includes('twitter')" class="row justify-content-center mx-auto">
+            <div class="col-12 my-2 text-center">
+              <span>
+                <link-prevue :url="statusURL">
+                  <template slot-scope="props">
+                    <a v-bind:href="props.url">
+                      <div class="card" style="width: 30rem;">
+                        <img
+                          class="card-img-top"
+                          :src="props.img"
+                          :alt="props.title"
+                        />
+                        <div class="card-block">
+                          <h4 class="card-title">{{ props.title }}</h4>
+                          <p class="card-text">{{ props.description }}</p>
+                        </div>
+                      </div>
+                    </a>
+                  </template>
+                </link-prevue>
               </span>
             </div>
           </div>
@@ -199,12 +224,17 @@
 </template>
 
 <script>
+import LinkPrevue from "link-prevue";
+
 export default {
+  components: { LinkPrevue },
+
   data: function () {
     return {
       id: this.tweet.id,
       tweetWeight: this.tweet.weight,
       voteDirection: null,
+      statusURL: "",
     };
   },
 
@@ -213,6 +243,10 @@ export default {
   },
 
   created() {
+    if (this.tweet.status_urls.length > 0 && this.tweet.status_media_url === null) {
+      console.log(this.tweet.status_media_url);
+      this.statusURL = this.tweet.status_urls[0].expanded_url;
+    }
     //Vote should be an Object when viewing multiple votes
     if (typeof this.tweet.vote == "object") {
       if (this.tweet.vote.length > 0) {
@@ -233,9 +267,11 @@ export default {
 
   methods: {
     vote: function (direction) {
-      grecaptcha.ready(()=> {
+      grecaptcha.ready(() => {
         grecaptcha
-          .execute("6LdZNN0aAAAAAMTumwVFuySzWAXonfvs8kFTmwyH", { action: "submit" })
+          .execute("6LdZNN0aAAAAAMTumwVFuySzWAXonfvs8kFTmwyH", {
+            action: "submit",
+          })
           .then((token) => {
             axios
               .get(`/api/vote/${this.tweet.id}/${direction}/${token}`)
@@ -263,7 +299,7 @@ export default {
                     });
                   }
                 } else {
-                  alert("spamming an API doesn't make you a hacker lol")
+                  alert("spamming an API doesn't make you a hacker lol");
                 }
               })
               .catch((error) => {
