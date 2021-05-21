@@ -59,7 +59,7 @@
               <span>
                 <link-prevue :url="statusURL">
                   <template slot-scope="props">
-                    <a v-bind:href="props.url" style="text-decoration:none;">
+                    <a v-bind:href="props.url" style="color: inherit;">
                       <div class="card" style="width: 30rem;">
                         <img
                           class="card-img-top"
