@@ -244,7 +244,6 @@ export default {
 
   created() {
     if (this.tweet.status_urls.length > 0 && this.tweet.status_media_url === null) {
-      console.log(this.tweet.status_media_url);
       this.statusURL = this.tweet.status_urls[0].expanded_url;
     }
     //Vote should be an Object when viewing multiple votes
