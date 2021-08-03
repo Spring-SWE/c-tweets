@@ -54,9 +54,9 @@
                             <li class="{{ (request()->segment(1) == 'about') ? 'active' : '' }}">
                                 <a href="/about">About</a>
                             </li>
-                            <li class="{{ (request()->segment(1) == 'change') ? 'active' : '' }}">
+                            {{-- <li class="{{ (request()->segment(1) == 'change') ? 'active' : '' }}">
                                 <a href="/change">Change Log</a>
-                            </li>
+                            </li> --}}
                             <li class="fire">
                                 <a href="/support" class="fire"><i class="fas fa-heart"></i> Support</a>
                         </ul>
