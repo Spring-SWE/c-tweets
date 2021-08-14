@@ -63,9 +63,9 @@
 
                         <div class="footer">
                             <p>
-                                Copyright &copy; <a href="https://twitter.com/ezbakespring">ezbakespring</a> All rights reserved.
+                                Copyright &copy; 2021 All rights reserved.
                             </p>
-                            <p>Special thanks to <a href="https://twitter.com/Woofingson">@woofingson</a> for all the help.</p>
+                           
                         </div>
 
                     </div>
