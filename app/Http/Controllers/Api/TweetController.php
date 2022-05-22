@@ -75,10 +75,7 @@ class TweetController extends Controller
                 //Try to run! IF any errors are found, they should be dealt with by the catch.
                 try {
                     $selectedTweet = Twitter::getTweet($originalTweet['in_reply_to_status_id_str'], ['tweet_mode' => 'extended', 'response_format' => 'array']);
-                    // echo"<pre>";
-                    // var_dump($selectedTweet);
-                    // echo"</pre>";
-
+                 
                     //verify that the tweet is a tweet DIRECTLY replying to PARENT Tweet
                     //no multi-level tweets yet allowed.
                     if ($selectedTweet['in_reply_to_status_id_str']) {
@@ -131,23 +128,6 @@ class TweetController extends Controller
                             if (array_key_exists('quoted_status_permalink', $selectedTweet)) {
                                 $selectedTweet['full_text'] = str_replace($selectedTweet['quoted_status_permalink']['url'], '', $selectedTweet['full_text']);
                             }
-
-                            //Now lets see if we can also remove the link-back url to the post.
-                            //Im assuming the first index will also be the link back to twitter?
-                            // if(array_key_exists('0', $selectedTweet['entities']['urls'])) {
-                            //     echo "Matched URL " . $selectedTweet['entities']['urls']['0']['url'] . "<br>" ;
-                            //     $selectedTweet['full_text'] = str_replace($selectedTweet['entities']['urls']['0']['url'], '', $selectedTweet['full_text']);
-                            //     echo "being removed from: <br>";
-                            // }
-
-                            // echo $selectedTweet['full_text'];
-                            // echo "<br><br>";
-
-                            // echo "<pre>";
-                            // print_r($selectedTweet);
-                            // echo "</pre>";
-
-
 
                             $tweet = Tweet::create([
                                 'status_created_at' => $selectedTweet['created_at'],
