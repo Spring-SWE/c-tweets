@@ -10,7 +10,7 @@ C-tweets is a web-app that run using the Twitter API to grab tweets that user su
 
 - tag @ctweetsbots on Twitter with a quote tweet
 - Head over to the app
-- Search for the tweet and begin voting!
+- Search for the tweet and begin voting and discussing!
 
 ## Tech
 
