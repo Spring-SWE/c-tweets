@@ -4,7 +4,7 @@
 [![N|Solid](https://i.ibb.co/xCSTV14/Screen-Shot-2022-11-29-at-3-49-08-PM.png)](https://nodesource.com/products/nsolid)
 
 
-Dillinger is a web-app that run using the Twitter API to grab tweets that user submit. Once submitted, users can vote on the worst tweets!
+C-tweets is a web-app that run using the Twitter API to grab tweets that user submit. Once submitted, users can vote on the worst tweets!
 
 ## How to use
 
