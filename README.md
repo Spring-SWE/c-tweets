@@ -1,4 +1,4 @@
-## Cringe Tweet
-source code for cringetweets.com
+## C-Tweet
+source code for c-tweets.com
 
 
